@@ -12,7 +12,7 @@ let
     company_id = Number.ToText(Excel.CurrentWorkbook(){[Name="Параметры"]}[Content][company_id]{0}),
 
     // Определяем имя хранимой процедуры, которую будем вызывать
-    query = "GetProJectWork",
+    query = "GetEmployeeChangesRefresh",
 
     // Выполняем хранимую процедуру с параметрами company_id и year_number
     Источник = Value.NativeQuery(
