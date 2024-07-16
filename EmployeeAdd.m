@@ -17,7 +17,7 @@ let
     // Выполняем хранимую процедуру с параметрами company_id и year_number
     Источник = Value.NativeQuery(
         server,
-        "exec " & query & " " & company_id & ", " & start_year_number & "," & end_year_number & ""
+        "exec " & query & " " & company_id & ""
     )
 in
     Источник
