@@ -14,9 +14,9 @@ let
     // Получаем данные из умной таблицы "Сотрудники"
     employeesTable = Excel.CurrentWorkbook(){[Name="Сотрудники"]}[Content],    
     // Убираем строку с "Итого"
-    filteredEmployeesTable = Table.SelectRows(employeesTable, each [Пользовательский] <> "Итого"),
+    filteredEmployeesTable = Table.SelectRows(employeesTable, each [Сотрудник] <> "Итого"),
     // Получаем только список сотрудников
-    employeeNamesList = filteredEmployeesTable[Пользовательский],    
+    employeeNamesList = filteredEmployeesTable[Сотрудник],    
     // Конкатенируем имена сотрудников в одну строку, разделяя запятыми
     employeeNames = Text.Combine(employeeNamesList, ","),
 
