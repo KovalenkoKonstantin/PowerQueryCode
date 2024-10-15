@@ -1,4 +1,5 @@
 let
+    //v.1.0
     // Подключаемся к базе данных SQL Server
     server = Sql.Database("msk-sql-02", "RKM"),
 
@@ -12,7 +13,7 @@ let
     company_id = Number.ToText(Excel.CurrentWorkbook(){[Name="Параметры"]}[Content][company_id]{0}),
 
     // Получаем данные из умной таблицы "Сотрудники"
-    employeesTable = Excel.CurrentWorkbook(){[Name="Сотрудники"]}[Content],    
+    employeesTable = Excel.CurrentWorkbook(){[Name="Сотрудники"]}[Content],
     // Убираем строку с "Итого"
     filteredEmployeesTable = Table.SelectRows(employeesTable, each [Сотрудник] <> "Итого"),
     // Получаем только список сотрудников
@@ -21,7 +22,7 @@ let
     employeeNames = Text.Combine(employeeNamesList, ","),
 
     // Определяем имя хранимой процедуры, которую будем вызывать
-    query = "GetSalaryBudgetRefresh",
+    query = "SalaryBudget_v_1_0",
 
     // Формируем вызов хранимой процедуры с параметрами company_id, start_year_number, end_year_number, и employee_names
     Источник = Value.NativeQuery(
