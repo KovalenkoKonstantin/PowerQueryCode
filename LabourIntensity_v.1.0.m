@@ -1,0 +1,27 @@
+let
+    //v.1.1
+    // Подключаемся к базе данных SQL Server
+    server = Sql.Database("msk-sql-02", "RKM"),
+
+    // Получаем значение параметра start_year_number из таблицы "Параметры" в текущей книге Excel
+    start_year_number = Number.ToText(Excel.CurrentWorkbook(){[Name="Параметры"]}[Content][start_year_number]{0}),
+	
+	// Получаем значение параметра end_year_number из таблицы "Параметры" в текущей книге Excel
+    end_year_number = Number.ToText(Excel.CurrentWorkbook(){[Name="Параметры"]}[Content][end_year_number]{0}),
+
+    // Получаем значение параметра company_id из таблицы "Параметры" в текущей книге Excel
+    company_id = Number.ToText(Excel.CurrentWorkbook(){[Name="Параметры"]}[Content][company_id]{0}),
+
+    // Получаем значение параметра project_cipher из таблицы "Параметры" в текущей книге Excel
+    project_cipher = Excel.CurrentWorkbook(){[Name="Параметры"]}[Content][project_cipher]{0},
+
+    // Определяем имя хранимой процедуры, которую будем вызывать
+    query = "Components_v_1_1",
+
+    // Выполняем хранимую процедуру с параметрами company_id и year_number
+    Источник = Value.NativeQuery(
+        server,
+        "exec " & query & " '" & project_cipher & "'"
+    )
+in
+    Источник
