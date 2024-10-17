@@ -1,4 +1,5 @@
 let
+    //v.1.0
     // Подключаемся к базе данных SQL Server
     server = Sql.Database("msk-sql-02", "RKM"),
 
