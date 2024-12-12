@@ -22,7 +22,7 @@ let
     employeeNames = Text.Combine(employeeNamesList, ","),
 
     // Определяем имя хранимой процедуры, которую будем вызывать
-    query = "GetEmployeeChangesRefresh",
+    query = "EmployeeChanges_v_1_0",
 
     // Формируем вызов хранимой процедуры с параметрами company_id, start_year_number, end_year_number, и employee_names
     Источник = Value.NativeQuery(
