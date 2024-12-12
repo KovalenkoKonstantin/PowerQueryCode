@@ -1,5 +1,5 @@
 let
-    //v.1.0
+    //v.1.4
     // Подключаемся к базе данных SQL Server
     server = Sql.Database("msk-sql-02", "RKM"),
 
@@ -12,13 +12,22 @@ let
     // Получаем значение параметра company_id из таблицы "Параметры" в текущей книге Excel
     company_id = Number.ToText(Excel.CurrentWorkbook(){[Name="Параметры"]}[Content][company_id]{0}),
 
-    // Определяем имя хранимой процедуры, которую будем вызывать
-    query = "Project_v_1_0",
+    // Получаем данные из умной таблицы "Сотрудники"
+    employeesTable = Excel.CurrentWorkbook(){[Name="Сотрудники"]}[Content],    
+    // Убираем строку с "Итого"
+    filteredEmployeesTable = Table.SelectRows(employeesTable, each [Сотрудник] <> "Итого"),
+    // Получаем только список сотрудников
+    employeeNamesList = filteredEmployeesTable[Сотрудник],    
+    // Конкатенируем имена сотрудников в одну строку, разделяя запятыми
+    employeeNames = Text.Combine(employeeNamesList, ","),
 
-    // Выполняем хранимую процедуру с параметрами company_id и year_number
+    // Определяем имя хранимой процедуры, которую будем вызывать
+    query = "Employee_v_1_4",
+
+    // Формируем вызов хранимой процедуры с параметрами company_id, start_year_number, end_year_number, и employee_names
     Источник = Value.NativeQuery(
         server,
-        "exec " & query & " " & company_id & ", " & start_year_number & "," & end_year_number & ""
+        "exec " & query & " " & company_id & ", '" & employeeNames & "'"
     )
 in
     Источник
